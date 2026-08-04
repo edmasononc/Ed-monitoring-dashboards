@@ -1,0 +1,574 @@
+[
+    {
+        "deviceId": 26799,
+        "deviceName": "Sea-Bird SeaCAT SBE19plus V2 7877",
+        "deviceCode": "SBECTD19p7877",
+        "deviceCategory": "Conductivity Temperature Depth",
+        "deviceCategoryId": 5,
+        "sensors": [
+            {
+                "sensorId": 29960,
+                "sensorName": "Conductivity",
+                "sensorType": "Conductivity: siemens per metre",
+                "sensorCode": "cond",
+                "sensorCodeId": 644
+            },
+            {
+                "sensorId": 29919,
+                "sensorName": "Density",
+                "sensorType": "Density",
+                "sensorCode": "density",
+                "sensorCodeId": 652
+            },
+            {
+                "sensorId": 738,
+                "sensorName": "Depth",
+                "sensorType": "Depth",
+                "sensorCode": "depth",
+                "sensorCodeId": 91
+            },
+            {
+                "sensorId": 29921,
+                "sensorName": "Practical Salinity",
+                "sensorType": "Salinity",
+                "sensorCode": "salinity",
+                "sensorCodeId": 796
+            },
+            {
+                "sensorId": 29942,
+                "sensorName": "Pressure",
+                "sensorType": "Pressure",
+                "sensorCode": "Pressure",
+                "sensorCodeId": 368
+            },
+            {
+                "sensorId": 29959,
+                "sensorName": "Sigma-t",
+                "sensorType": "Sigma-t",
+                "sensorCode": "sigmaT",
+                "sensorCodeId": 803
+            },
+            {
+                "sensorId": 29961,
+                "sensorName": "Sigma-theta (0 dbar)",
+                "sensorType": "Sigma-theta",
+                "sensorCode": "SIGMA_THETA",
+                "sensorCodeId": 904
+            },
+            {
+                "sensorId": 29922,
+                "sensorName": "Sound Speed",
+                "sensorType": "Sound Speed: sound velocity sensor",
+                "sensorCode": "Sound_Speed",
+                "sensorCodeId": 445
+            },
+            {
+                "sensorId": 29941,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 85352,
+        "deviceName": "Sea-Bird SBE 43 Oxygen (S/N 4486)",
+        "deviceCode": "SBE43-4486",
+        "deviceCategory": "Oxygen Sensor",
+        "deviceCategoryId": 25,
+        "sensors": [
+            {
+                "sensorId": 110177,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            }
+        ],
+        "locationName": "Oxygen - SBE 43",
+        "locationCode": "BACVP.O3",
+        "searchTreeNodeId": 3296,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 12110,
+        "deviceName": "Aanderaa Optode 3830 (S/N 910)",
+        "deviceCode": "AA02_3830_910",
+        "deviceCategory": "Oxygen Sensor",
+        "deviceCategoryId": 25,
+        "sensors": [
+            {
+                "sensorId": 4307,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            },
+            {
+                "sensorId": 4251,
+                "sensorName": "Oxygen Concentration Uncorrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen",
+                "sensorCodeId": 731
+            },
+            {
+                "sensorId": 4252,
+                "sensorName": "Oxygen Saturation",
+                "sensorType": "Saturation: of gas",
+                "sensorCode": "oxygen_saturation",
+                "sensorCodeId": 733
+            },
+            {
+                "sensorId": 4253,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "Oxygen - Aanderaa",
+        "locationCode": "BACVP.O1",
+        "searchTreeNodeId": 143,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 12116,
+        "deviceName": "WET Labs CDOM Fluorometer 1260",
+        "deviceCode": "WET_CDOM_1260",
+        "deviceCategory": "Coloured Dissolved Organic Matter",
+        "deviceCategoryId": 86,
+        "sensors": [
+            {
+                "sensorId": 4266,
+                "sensorName": "CDOM",
+                "sensorType": "Colored Dissolved Organic Matter (CDOM)",
+                "sensorCode": "cdom",
+                "sensorCodeId": 38
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 23061,
+        "deviceName": "WET Labs ECO FLNTUS 2585",
+        "deviceCode": "WETLABSFLNTU2585",
+        "deviceCategory": "Fluorometer Turbidity",
+        "deviceCategoryId": 85,
+        "sensors": [
+            {
+                "sensorId": 9248,
+                "sensorName": "Chlorophyll",
+                "sensorType": "Chlorophyll",
+                "sensorCode": "chlorophyll",
+                "sensorCodeId": 637
+            },
+            {
+                "sensorId": 9247,
+                "sensorName": "Clock",
+                "sensorType": "Time: Gregorian days since 19700101T000000Z",
+                "sensorCode": "clock",
+                "sensorCodeId": 49
+            },
+            {
+                "sensorId": 9249,
+                "sensorName": "Turbidity",
+                "sensorType": "Turbidity: nephelometric turbidity units",
+                "sensorCode": "turbidity",
+                "sensorCodeId": 856
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 12107,
+        "deviceName": "Satlantic Upwelling Radiometer HOCR-RO8 (SN 257)",
+        "deviceCode": "SAT_HOCR_R08W_257",
+        "deviceCategory": "Radiometer",
+        "deviceCategoryId": 29,
+        "sensors": [],
+        "locationName": "Radiometer - Upwelling",
+        "locationCode": "BACVP.Q1",
+        "searchTreeNodeId": 468,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 12106,
+        "deviceName": "Satlantic Downwelling Radiometer HOCR-ICSW (SN 301)",
+        "deviceCode": "SAT_HOCR_ICSW_301",
+        "deviceCategory": "Radiometer",
+        "deviceCategoryId": 29,
+        "sensors": [],
+        "locationName": "Radiometer - Downwelling",
+        "locationCode": "BACVP.Q2",
+        "searchTreeNodeId": 469,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 31379,
+        "deviceName": "Pro-Oceanus CO2-Pro CV (SN 39-597-75)",
+        "deviceCode": "PROCO2-39-597-75",
+        "deviceCategory": "Carbon Dioxide Sensor",
+        "deviceCategoryId": 4,
+        "sensors": [
+            {
+                "sensorId": 37260,
+                "sensorName": "CO2 Count Raw",
+                "sensorType": "Count: scientific data counter",
+                "sensorCode": "raw2",
+                "sensorCodeId": 780
+            },
+            {
+                "sensorId": 37261,
+                "sensorName": "CO2 Partial Pressure",
+                "sensorType": "Pressure: carbon dioxide, partial pressure",
+                "sensorCode": "partial_pressure",
+                "sensorCodeId": 349
+            },
+            {
+                "sensorId": 37221,
+                "sensorName": "Gas Analyzer Detector Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature3",
+                "sensorCodeId": 694
+            },
+            {
+                "sensorId": 37239,
+                "sensorName": "Gas Analyzer Source Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature4",
+                "sensorCodeId": 695
+            },
+            {
+                "sensorId": 37262,
+                "sensorName": "Gas Stream Pressure",
+                "sensorType": "Pressure: for dissolved gas sensors",
+                "sensorCode": "internal_pressure",
+                "sensorCodeId": 691
+            },
+            {
+                "sensorId": 37219,
+                "sensorName": "Gas Stream Vapour Partial Pressure",
+                "sensorType": "Pressure: for dissolved gas sensors",
+                "sensorCode": "internal_humidity",
+                "sensorCodeId": 689
+            },
+            {
+                "sensorId": 37220,
+                "sensorName": "Humidity Sensor Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature2",
+                "sensorCodeId": 693
+            },
+            {
+                "sensorId": 37240,
+                "sensorName": "Linearized CO2 Concentration",
+                "sensorType": "Concentration: carbon dioxide, linearized",
+                "sensorCode": "co2",
+                "sensorCodeId": 642
+            },
+            {
+                "sensorId": 37241,
+                "sensorName": "Optical Cell Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature",
+                "sensorCodeId": 692
+            },
+            {
+                "sensorId": 37259,
+                "sensorName": "Zero Point Calibration",
+                "sensorType": "Count: scientific data counter",
+                "sensorCode": "raw1",
+                "sensorCodeId": 779
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 23268,
+        "deviceName": "Satlantic Nitrate Sensor SUNA V2 SN 405",
+        "deviceCode": "SATLANTICSUNAV2-405",
+        "deviceCategory": "Nitrate sensor",
+        "deviceCategoryId": 6,
+        "sensors": [
+            {
+                "sensorId": 217,
+                "sensorName": "254nm Absorbance",
+                "sensorType": "Absorbance: LED light",
+                "sensorCode": "absorbance_254nm",
+                "sensorCodeId": 2024
+            },
+            {
+                "sensorId": 218,
+                "sensorName": "350nm Absorbance",
+                "sensorType": "Absorbance: LED light",
+                "sensorCode": "absorbance_350nm",
+                "sensorCodeId": 2025
+            },
+            {
+                "sensorId": 13307,
+                "sensorName": "Auxiliary Fitting Result 1",
+                "sensorType": "Serial communications connection",
+                "sensorCode": "auxillary_fitting_1",
+                "sensorCodeId": 619
+            },
+            {
+                "sensorId": 13300,
+                "sensorName": "Auxiliary Fitting Result 2",
+                "sensorType": "Serial communications connection",
+                "sensorCode": "auxillary_fitting_2",
+                "sensorCodeId": 620
+            },
+            {
+                "sensorId": 13301,
+                "sensorName": "Instrument Clock",
+                "sensorType": "Time: Gregorian days since 19700101T000000Z",
+                "sensorCode": "clock",
+                "sensorCodeId": 49
+            },
+            {
+                "sensorId": 13309,
+                "sensorName": "Internal Analog Voltage",
+                "sensorType": "Voltage: voltage sensor",
+                "sensorCode": "internal_voltage",
+                "sensorCodeId": 696
+            },
+            {
+                "sensorId": 13311,
+                "sensorName": "Internal Humidity",
+                "sensorType": "Humidity: internal to calibrate instrument",
+                "sensorCode": "internal_humidity",
+                "sensorCodeId": 689
+            },
+            {
+                "sensorId": 13306,
+                "sensorName": "Internal Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature",
+                "sensorCodeId": 692
+            },
+            {
+                "sensorId": 13303,
+                "sensorName": "Lamp On-Time",
+                "sensorType": "Runtime Sensor",
+                "sensorCode": "lamp_time",
+                "sensorCodeId": 700
+            },
+            {
+                "sensorId": 13304,
+                "sensorName": "Lamp Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "lamp_temperature",
+                "sensorCodeId": 699
+            },
+            {
+                "sensorId": 13312,
+                "sensorName": "Lamp Voltage",
+                "sensorType": "Voltage: voltage sensor",
+                "sensorCode": "lamp_voltage",
+                "sensorCodeId": 701
+            },
+            {
+                "sensorId": 13310,
+                "sensorName": "Main Supply Voltage",
+                "sensorType": "Voltage: voltage sensor",
+                "sensorCode": "main_voltage",
+                "sensorCodeId": 717
+            },
+            {
+                "sensorId": 13308,
+                "sensorName": "Nitrate Concentration",
+                "sensorType": "Concentration: nitrate",
+                "sensorCode": "nitrate",
+                "sensorCodeId": 727
+            },
+            {
+                "sensorId": 13315,
+                "sensorName": "Nitrate Concentration (Dark)",
+                "sensorType": "Concentration: nitrate",
+                "sensorCode": "nitrate_dark",
+                "sensorCodeId": 187
+            },
+            {
+                "sensorId": 13302,
+                "sensorName": "Nitrate Concentration RMS Error",
+                "sensorType": "Count: scientific data counter",
+                "sensorCode": "nitrate_concentration_rms_error",
+                "sensorCodeId": 728
+            },
+            {
+                "sensorId": 13316,
+                "sensorName": "Spectrometer Average",
+                "sensorType": "Count: scientific data counter",
+                "sensorCode": "spectrometer_average",
+                "sensorCodeId": 807
+            },
+            {
+                "sensorId": 13314,
+                "sensorName": "Spectrometer Average (Dark)",
+                "sensorType": "Count: scientific data counter",
+                "sensorCode": "spectrum_average_dark",
+                "sensorCodeId": 810
+            },
+            {
+                "sensorId": 13305,
+                "sensorName": "Spectrometer Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "spectrometer_temperature",
+                "sensorCodeId": 808
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    },
+    {
+        "deviceId": 88312,
+        "deviceName": "Sea-Bird Deep SeapHOx V2 SN 721-2108",
+        "deviceCode": "SBEDSPHOXV2SN7212108",
+        "deviceCategory": "Integrated CTD pH O2 Instrument",
+        "deviceCategoryId": 152,
+        "sensors": [
+            {
+                "sensorId": 114622,
+                "sensorName": "Conductivity",
+                "sensorType": "Conductivity: siemens per metre",
+                "sensorCode": "cond",
+                "sensorCodeId": 644
+            },
+            {
+                "sensorId": 114600,
+                "sensorName": "Density",
+                "sensorType": "Density",
+                "sensorCode": "density",
+                "sensorCodeId": 652
+            },
+            {
+                "sensorId": 208,
+                "sensorName": "Depth",
+                "sensorType": "Depth",
+                "sensorCode": "depth",
+                "sensorCodeId": 91
+            },
+            {
+                "sensorId": 114597,
+                "sensorName": "Error Code",
+                "sensorType": "Error Code",
+                "sensorCode": "error_code",
+                "sensorCodeId": 108
+            },
+            {
+                "sensorId": 114618,
+                "sensorName": "External pH (Dynamic Salinity)",
+                "sensorType": "pH",
+                "sensorCode": "ph",
+                "sensorCodeId": 735
+            },
+            {
+                "sensorId": 114621,
+                "sensorName": "FET External Voltage",
+                "sensorType": "Voltage: voltage sensor",
+                "sensorCode": "fet_ext_voltage",
+                "sensorCodeId": 671
+            },
+            {
+                "sensorId": 114617,
+                "sensorName": "Instrument Clock",
+                "sensorType": "Time: Gregorian days since 19700101T000000Z",
+                "sensorCode": "clock",
+                "sensorCodeId": 49
+            },
+            {
+                "sensorId": 114598,
+                "sensorName": "Internal Humidity",
+                "sensorType": "Humidity: internal to calibrate instrument",
+                "sensorCode": "internal_humidity",
+                "sensorCodeId": 689
+            },
+            {
+                "sensorId": 114601,
+                "sensorName": "Internal Temperature",
+                "sensorType": "Temperature: instrument internal temperature",
+                "sensorCode": "internal_temperature",
+                "sensorCodeId": 692
+            },
+            {
+                "sensorId": 114599,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            },
+            {
+                "sensorId": 114623,
+                "sensorName": "Practical Salinity",
+                "sensorType": "Salinity",
+                "sensorCode": "salinity",
+                "sensorCodeId": 796
+            },
+            {
+                "sensorId": 114620,
+                "sensorName": "Pressure",
+                "sensorType": "Pressure",
+                "sensorCode": "Pressure",
+                "sensorCodeId": 368
+            },
+            {
+                "sensorId": 114657,
+                "sensorName": "Sigma-t",
+                "sensorType": "Sigma-t",
+                "sensorCode": "sigmaT",
+                "sensorCodeId": 803
+            },
+            {
+                "sensorId": 114637,
+                "sensorName": "Sigma-theta (0 dbar)",
+                "sensorType": "Sigma-theta",
+                "sensorCode": "SIGMA_THETA",
+                "sensorCodeId": 904
+            },
+            {
+                "sensorId": 114677,
+                "sensorName": "Sound Speed",
+                "sensorType": "Sound Speed: sound velocity sensor",
+                "sensorCode": "Sound_Speed",
+                "sensorCodeId": 445
+            },
+            {
+                "sensorId": 114619,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "Upper Slope Vertical Profiler",
+        "locationCode": "BACVP",
+        "searchTreeNodeId": 49,
+        "lat": 48.42751,
+        "lon": -126.17416
+    }
+]

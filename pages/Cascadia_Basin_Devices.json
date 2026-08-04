@@ -1,0 +1,107 @@
+[
+    {
+        "deviceId": 51780,
+        "deviceName": "Sea-Bird SeaCAT SBE19plus V2 8062",
+        "deviceCode": "SBECTD19p8062",
+        "deviceCategory": "Conductivity Temperature Depth",
+        "deviceCategoryId": 5,
+        "sensors": [
+            {
+                "sensorId": 66420,
+                "sensorName": "Conductivity",
+                "sensorType": "Conductivity: siemens per metre",
+                "sensorCode": "cond",
+                "sensorCodeId": 644
+            },
+            {
+                "sensorId": 66403,
+                "sensorName": "Density",
+                "sensorType": "Density",
+                "sensorCode": "density",
+                "sensorCodeId": 652
+            },
+            {
+                "sensorId": 66380,
+                "sensorName": "Practical Salinity",
+                "sensorType": "Salinity",
+                "sensorCode": "salinity",
+                "sensorCodeId": 796
+            },
+            {
+                "sensorId": 66382,
+                "sensorName": "Pressure",
+                "sensorType": "Pressure",
+                "sensorCode": "Pressure",
+                "sensorCodeId": 368
+            },
+            {
+                "sensorId": 66421,
+                "sensorName": "Sigma-t",
+                "sensorType": "Sigma-t",
+                "sensorCode": "sigmaT",
+                "sensorCodeId": 803
+            },
+            {
+                "sensorId": 66424,
+                "sensorName": "Sigma-theta (0 dbar)",
+                "sensorType": "Sigma-theta",
+                "sensorCode": "SIGMA_THETA",
+                "sensorCodeId": 904
+            },
+            {
+                "sensorId": 66423,
+                "sensorName": "Sound Speed",
+                "sensorType": "Sound Speed: sound velocity sensor",
+                "sensorCode": "Sound_Speed",
+                "sensorCodeId": 445
+            },
+            {
+                "sensorId": 66425,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "ODP 1026",
+        "locationCode": "NC27",
+        "searchTreeNodeId": 37,
+        "lat": 47.762526,
+        "lon": -127.758707
+    },
+    {
+        "deviceId": 51820,
+        "deviceName": "Sea-Bird SBE 63 Dissolved Oxygen Sensor 632576",
+        "deviceCode": "SBE63632576",
+        "deviceCategory": "Oxygen Sensor",
+        "deviceCategoryId": 25,
+        "sensors": [
+            {
+                "sensorId": 66405,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            },
+            {
+                "sensorId": 66481,
+                "sensorName": "Oxygen Concentration Uncorrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_uncorrected",
+                "sensorCodeId": 734
+            },
+            {
+                "sensorId": 66480,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "temperature",
+                "sensorCodeId": 843
+            }
+        ],
+        "locationName": "ODP 1026",
+        "locationCode": "NC27",
+        "searchTreeNodeId": 37,
+        "lat": 47.762526,
+        "lon": -127.758707
+    }
+]

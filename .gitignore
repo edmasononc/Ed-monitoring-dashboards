@@ -1,0 +1,10 @@
+# Environments
+.env
+.venv/
+.streamlit/
+coverage/
+cache/sonar_binaries/
+cache/
+*.smb
+__pychache__/
+*.pyc

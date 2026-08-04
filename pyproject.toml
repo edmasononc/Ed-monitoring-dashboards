@@ -1,0 +1,46 @@
+[project]
+name = "oncdw-dashboards"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "ipykernel>=7.3.0",
+    "jira>=3.10.5",
+    "kongsberg-sonar",
+    "oncdw",
+    "psycopg2-binary>=2.9.12",
+    "sqlalchemy>=2.0.50",
+    "streamlit>=1.56.0",
+]
+
+[project.optional-dependencies]
+query = [
+    "sqlalchemy",
+    "psycopg2-binary",
+]
+
+[tool.uv.sources]
+oncdw = { git = "https://github.com/OceanNetworksCanada/oncdw", rev = "main" }
+kongsberg-sonar = { path = "../../ActiveAcoustics/Sonar/smb_parser/kongsberg-parser" }
+#oncdw = { path = "../oncdw", editable = true }
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I"
+]
+
+ignore = ["E501"]
+
+

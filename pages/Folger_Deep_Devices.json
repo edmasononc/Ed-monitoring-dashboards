@@ -1,0 +1,128 @@
+[
+    {
+        "deviceId": 23833,
+        "deviceName": "Sea-Bird SeaCAT SBE19plus V2 7286",
+        "deviceCode": "SBECTD19p7286",
+        "deviceCategory": "Conductivity Temperature Depth",
+        "deviceCategoryId": 5,
+        "sensors": [
+            {
+                "sensorId": 16642,
+                "sensorName": "Conductivity",
+                "sensorType": "Conductivity: siemens per metre",
+                "sensorCode": "cond",
+                "sensorCodeId": 644
+            },
+            {
+                "sensorId": 16644,
+                "sensorName": "Density",
+                "sensorType": "Density",
+                "sensorCode": "density",
+                "sensorCodeId": 652
+            },
+            {
+                "sensorId": 16640,
+                "sensorName": "Practical Salinity",
+                "sensorType": "Salinity",
+                "sensorCode": "salinity",
+                "sensorCodeId": 796
+            },
+            {
+                "sensorId": 16647,
+                "sensorName": "Pressure",
+                "sensorType": "Pressure",
+                "sensorCode": "Pressure",
+                "sensorCodeId": 368
+            },
+            {
+                "sensorId": 16641,
+                "sensorName": "Sigma-t",
+                "sensorType": "Sigma-t",
+                "sensorCode": "sigmaT",
+                "sensorCodeId": 803
+            },
+            {
+                "sensorId": 16643,
+                "sensorName": "Sigma-theta (0 dbar)",
+                "sensorType": "Sigma-theta",
+                "sensorCode": "SIGMA_THETA",
+                "sensorCodeId": 904
+            },
+            {
+                "sensorId": 16645,
+                "sensorName": "Sound Speed",
+                "sensorType": "Sound Speed: sound velocity sensor",
+                "sensorCode": "Sound_Speed",
+                "sensorCodeId": 445
+            },
+            {
+                "sensorId": 16646,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "Folger Deep",
+        "locationCode": "FGPD",
+        "searchTreeNodeId": 27,
+        "lat": 48.813816,
+        "lon": -125.279656
+    },
+    {
+        "deviceId": 23049,
+        "deviceName": "Sea-Bird SBE 63 Dissolved Oxygen Sensor 630111",
+        "deviceCode": "SBE63630111",
+        "deviceCategory": "Oxygen Sensor",
+        "deviceCategoryId": 25,
+        "sensors": [
+            {
+                "sensorId": 9229,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            },
+            {
+                "sensorId": 9669,
+                "sensorName": "Oxygen Concentration Uncorrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_uncorrected",
+                "sensorCodeId": 734
+            },
+            {
+                "sensorId": 3920,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "temperature",
+                "sensorCodeId": 843
+            }
+        ],
+        "locationName": "Oxygen Sensor SBE63",
+        "locationCode": "FGPD.O2",
+        "searchTreeNodeId": 117,
+        "lat": 48.813762,
+        "lon": -125.280777
+    },
+    {
+        "deviceId": 10011,
+        "deviceName": "OceanWorks Junction Box JB-02 | CTD Current (Superpump Visual)",
+        "deviceCode": "OCEANWORKSJB02",
+        "deviceCategory": "Junction Box",
+        "deviceCategoryId": 38,
+        "sensors": [
+            {
+                "sensorId": 5668,
+                "sensorName": "J4 CurrentValue",
+                "sensorType": "Amperage",
+                "sensorCode": "p7c_currentvalue",
+                "sensorCodeId": 279
+            }
+        ],
+        "locationName": "Folger Deep",
+        "locationCode": "FGPD",
+        "searchTreeNodeId": 27,
+        "lat": 48.813816,
+        "lon": -125.279656
+    }
+]

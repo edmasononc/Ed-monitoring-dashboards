@@ -1,0 +1,135 @@
+[
+    {
+        "deviceId": 23840,
+        "deviceName": "Sea-Bird SeaCAT SBE19plus V2 6002",
+        "deviceCode": "SBECTD19p6002",
+        "deviceCategory": "Conductivity Temperature Depth",
+        "deviceCategoryId": 5,
+        "sensors": [
+            {
+                "sensorId": 16668,
+                "sensorName": "Conductivity",
+                "sensorType": "Conductivity: siemens per metre",
+                "sensorCode": "cond",
+                "sensorCodeId": 644
+            },
+            {
+                "sensorId": 16670,
+                "sensorName": "Density",
+                "sensorType": "Density",
+                "sensorCode": "density",
+                "sensorCodeId": 652
+            },
+            {
+                "sensorId": 16666,
+                "sensorName": "Practical Salinity",
+                "sensorType": "Salinity",
+                "sensorCode": "salinity",
+                "sensorCodeId": 796
+            },
+            {
+                "sensorId": 16673,
+                "sensorName": "Pressure",
+                "sensorType": "Pressure",
+                "sensorCode": "Pressure",
+                "sensorCodeId": 368
+            },
+            {
+                "sensorId": 16667,
+                "sensorName": "Sigma-t",
+                "sensorType": "Sigma-t",
+                "sensorCode": "sigmaT",
+                "sensorCodeId": 803
+            },
+            {
+                "sensorId": 16669,
+                "sensorName": "Sigma-theta (0 dbar)",
+                "sensorType": "Sigma-theta",
+                "sensorCode": "SIGMA_THETA",
+                "sensorCodeId": 904
+            },
+            {
+                "sensorId": 16671,
+                "sensorName": "Sound Speed",
+                "sensorType": "Sound Speed: sound velocity sensor",
+                "sensorCode": "Sound_Speed",
+                "sensorCodeId": 445
+            },
+            {
+                "sensorId": 16672,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "Temperature",
+                "sensorCodeId": 492
+            }
+        ],
+        "locationName": "Barkley Canyon Axis",
+        "locationCode": "BACAX",
+        "searchTreeNodeId": 15,
+        "lat": 48.316615,
+        "lon": -126.050575
+    },
+    {
+        "deviceId": 23283,
+        "deviceName": "Sea-Bird SBE 63 Dissolved Oxygen Sensor 630637",
+        "deviceCode": "SBE63630637",
+        "deviceCategory": "Oxygen Sensor",
+        "deviceCategoryId": 25,
+        "sensors": [
+            {
+                "sensorId": 13326,
+                "sensorName": "Oxygen Concentration Corrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_corrected",
+                "sensorCodeId": 732
+            },
+            {
+                "sensorId": 13328,
+                "sensorName": "Oxygen Concentration Uncorrected",
+                "sensorType": "Oxygen: optode sensor",
+                "sensorCode": "oxygen_uncorrected",
+                "sensorCodeId": 734
+            },
+            {
+                "sensorId": 13327,
+                "sensorName": "Temperature",
+                "sensorType": "Temperature: sea water",
+                "sensorCode": "temperature",
+                "sensorCodeId": 843
+            }
+        ],
+        "locationName": "Barkley Canyon Axis",
+        "locationCode": "BACAX",
+        "searchTreeNodeId": 15,
+        "lat": 48.316615,
+        "lon": -126.050575
+    },
+    {
+        "deviceId": 23133,
+        "deviceName": "WET Labs ECO FLNTURTD 2973",
+        "deviceCode": "WETLABSECOFLNTURD2973",
+        "deviceCategory": "Fluorometer Turbidity",
+        "deviceCategoryId": 85,
+        "sensors": [
+            {
+                "sensorId": 9771,
+                "sensorName": "Chlorophyll",
+                "sensorType": "Chlorophyll",
+                "sensorCode": "chlorophyll",
+                "sensorCodeId": 637
+            },
+            {
+                "sensorId": 9772,
+                "sensorName": "Turbidity",
+                "sensorType": "Turbidity: nephelometric turbidity units",
+                "sensorCode": "turbidity",
+                "sensorCodeId": 856
+            }
+        ],
+        "locationName": "Barkley Canyon Axis",
+        "locationCode": "BACAX",
+        "searchTreeNodeId": 15,
+        "lat": 48.316615,
+        "lon": -126.050575
+    }
+]
