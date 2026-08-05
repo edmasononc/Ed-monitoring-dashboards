@@ -30,7 +30,7 @@ if os.path.exists("/mount/src"):
         return _orig_getaddrinfo(host, port, family, type, proto, flags)
 
     socket.getaddrinfo = _block_jira_dns
-    
+
 # --- Template 1 --------------------------------------------------------------------------------------------------
 def template1(
     json_filename: str,
@@ -221,7 +221,7 @@ def template4(
         client.section.data_preview(device)
 
 
-# --- Template 3b --------------------------------------------------------------------------------------------------
+# --- Template 3b (With Debugging Instrumentation) ------------------------------------------------------------------
 def template3b(
     json_filename: str,
     page_title: str,
@@ -236,8 +236,17 @@ def template3b(
     # --------------------------------------------------------------------------
     is_local_env = not os.path.exists("/mount/src")
 
-    with open(PAGES_DIR / f"{json_filename}.json", encoding="utf-8") as f:
-        devices: list = json.load(f)
+    st.caption(
+        f"🔍 **Debug Mode Active** | Environment: **{'Local Machine' if is_local_env else 'Streamlit Cloud'}**"
+    )
+
+    # 1. Load JSON Data
+    try:
+        with open(PAGES_DIR / f"{json_filename}.json", encoding="utf-8") as f:
+            devices: list = json.load(f)
+    except Exception as e:
+        st.error(f"❌ Failed to load JSON file ({json_filename}.json): {e}")
+        return
 
     primary_location = {
         "locationCode": devices[0].get(
@@ -257,10 +266,21 @@ def template3b(
             device["lat"] = primary_location["lat"]
             device["lon"] = primary_location["lon"]
 
-    client = ONCDW(show_info=True)
-    client.widget.map = render_custom_global_map
+    # 2. Initialize ONCDW Client
+    try:
+        client = ONCDW(show_info=True)
+        client.widget.map = render_custom_global_map
+    except Exception as e:
+        st.error(f"❌ ONCDW Client Initialization Failed: {e}")
 
-    _apply_concurrent_scalar_prefetch(client, [devices], date_from="-P7D")
+    # 3. Scalar Prefetch Check
+    try:
+        with st.spinner("🔄 Prefetching scalar data..."):
+            _apply_concurrent_scalar_prefetch(
+                client, [devices], date_from="-P7D"
+            )
+    except Exception as e:
+        st.warning(f"⚠️ Concurrent scalar prefetch failed or timed out: {e}")
 
     all_dev_ids = tuple(
         int(d.get("deviceId", d.get("device_id")))
@@ -268,7 +288,7 @@ def template3b(
         if d.get("deviceId", d.get("device_id"))
     )
 
-    # 🌐 Only fetch internal Jira tickets & DB annotations if running locally
+    # 4. Jira & Annotations
     jira_instr_data = (
         get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
     )
@@ -276,14 +296,21 @@ def template3b(
         get_onc_annotations(all_dev_ids) if is_local_env else {}
     )
 
-    client.ui.import_custom_badge_css(sticky_device=False)
+    try:
+        client.ui.import_custom_badge_css(sticky_device=False)
+    except Exception as e:
+        st.warning(f"⚠️ Badge CSS import failed: {e}")
 
     st.title(f"{page_title} Monitoring Dashboard")
 
+    # 5. Map Rendering Check
     if devices and "lat" in devices[0] and "lon" in devices[0]:
-        client.widget.map(
-            devices, center_lat=center_lat, center_lon=center_lon, zoom=zoom
-        )
+        try:
+            client.widget.map(
+                devices, center_lat=center_lat, center_lon=center_lon, zoom=zoom
+            )
+        except Exception as e:
+            st.error(f"❌ Map rendering failed: {e}")
 
     st.divider()
 
@@ -292,35 +319,46 @@ def template3b(
 
     left_spacer, center_col, right_spacer = st.columns([1, 3.5, 1])
     with center_col:
-        st.caption("Climate")
-        st.image(
-            f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv-Climate.png",
-            width="stretch",
-        )
-        st.caption("Anomaly")
-        st.image(
-            f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv-Anomaly.png",
-            width="stretch",
-        )
-        st.caption("Min / Max / Avg (1-Day)")
-        st.image(
-            f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv_MinMaxAvg1day.png",
-            width="stretch",
-        )
+        try:
+            st.caption("Climate")
+            st.image(
+                f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv-Climate.png",
+                width="stretch",
+            )
+            st.caption("Anomaly")
+            st.image(
+                f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv-Anomaly.png",
+                width="stretch",
+            )
+            st.caption("Min / Max / Avg (1-Day)")
+            st.image(
+                f"https://ftp.oceannetworks.ca/pub/DataProducts/SOO/{loc_code}/{loc_code}-StateOfOceanEnv_MinMaxAvg1day.png",
+                width="stretch",
+            )
+        except Exception as e:
+            st.warning(f"⚠️ State of the Ocean images failed to load: {e}")
 
     st.divider()
 
+    # 6. Sidebar Rendering Check
     with st.sidebar:
         st.title("List of Devices")
         for device in devices:
-            client.ui.location_sidebar(device)
-            client.ui.device_sidebar(device)
-            client.section.sensor_sidebar(device.get("sensors", []))
+            try:
+                client.ui.location_sidebar(device)
+                client.ui.device_sidebar(device)
+                client.section.sensor_sidebar(device.get("sensors", []))
+            except Exception as e:
+                st.error(f"❌ Sidebar device rendering failed: {e}")
             st.divider()
 
+    # 7. Device Loop Checks
     for device in devices:
         st.divider()
-        client.section.location_expander(device)
+        try:
+            client.section.location_expander(device)
+        except Exception as e:
+            st.warning(f"⚠️ Location expander failed: {e}")
 
         dev_id = device.get("deviceId", device.get("device_id", "Unknown ID"))
         dev_name = device.get(
@@ -328,7 +366,11 @@ def template3b(
         )
 
         st.subheader(f"{dev_name} ({dev_id})")
-        client.ui.device(device)
+
+        try:
+            client.ui.device(device)
+        except Exception as e:
+            st.error(f"❌ Device UI block failed for {dev_name}: {e}")
 
         # --- JIRA TICKETS SECTION ---
         if not is_local_env:
@@ -368,26 +410,31 @@ def template3b(
 
         st.write("")
 
-        # ==============================================================================
-        # --- QUICK ARCHIVE FILE TABLE ---
-        # ==============================================================================
+        # --- ARCHIVE FILES TABLE CHECK ---
         dev_code = device.get("deviceCode", device.get("device_code"))
-
-        # Checks ONLY if the device has a valid device code
         if dev_code:
             with st.expander(
                 "📦 **Archive Files (Last 3 Days)**", expanded=True
             ):
-                client.widget.table_archive_files(device, date_from="-P3D")
+                try:
+                    client.widget.table_archive_files(device, date_from="-P3D")
+                except Exception as e:
+                    st.error(
+                        f"❌ Archive Files Table failed for {dev_code}: {e}"
+                    )
             st.write("")
-        # ==============================================================================
 
-        # --- TIME SERIES PLOTS ---
+        # --- TIME SERIES PLOTS CHECK ---
         sensors_list = device.get("sensors", [])
         if sensors_list:
-            client.section.time_series(sensors_list, date_from="-P7D")
+            try:
+                client.section.time_series(sensors_list, date_from="-P7D")
+            except Exception as e:
+                st.error(
+                    f"❌ Time Series plots failed for device {dev_id}: {e}"
+                )
 
-    # 5. Automated CTD vs Oxygen Temp Comparison
+    # 8. CTD vs Oxygen Temp Comparison Check
     ctd_temp = None
     oxy_temp = None
 
@@ -436,7 +483,6 @@ def template3b(
         st.divider()
         st.subheader("Temperature Comparison: CTD vs. Oxygen Sensor")
 
-        # Safely extract labels and IDs whether the key is 'label', 'sensorName', etc.
         ctd_label = ctd_temp.get(
             "label",
             ctd_temp.get("sensorName", ctd_temp.get("sensor_name", "CTD")),
@@ -471,18 +517,21 @@ def template3b(
         if not selected_range:
             selected_range = "7D"
 
-        client.widget.time_series_two_sensors(
-            ctd_id,
-            oxy_id,
-            date_from=TIME_RANGE_MAP[selected_range],
-            label1=ctd_label,
-            label2=oxy_label,
-            color1="royalblue",
-            color2="red",
-            shade=False,
-        )
+        try:
+            client.widget.time_series_two_sensors(
+                ctd_id,
+                oxy_id,
+                date_from=TIME_RANGE_MAP[selected_range],
+                label1=ctd_label,
+                label2=oxy_label,
+                color1="royalblue",
+                color2="red",
+                shade=False,
+            )
+        except Exception as e:
+            st.error(f"❌ Two-Sensor Comparison Plot failed: {e}")
 
-# --- Template Coastal Observatories -------------------------------------------------------------------------------------------------
+            
 # --- Template Coastal Observatories -------------------------------------------------------------------------------------------------
 def template_coastal_obs(
     json_filename: str,
