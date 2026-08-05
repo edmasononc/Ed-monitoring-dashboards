@@ -227,8 +227,12 @@ def template3b(
         devices: list = json.load(f)
 
     primary_location = {
-        "locationCode": devices[0].get("locationCode", devices[0].get("location_code")),
-        "locationName": devices[0].get("locationName", devices[0].get("location_name")),
+        "locationCode": devices[0].get(
+            "locationCode", devices[0].get("location_code")
+        ),
+        "locationName": devices[0].get(
+            "locationName", devices[0].get("location_name")
+        ),
         "lat": devices[0].get("lat"),
         "lon": devices[0].get("lon"),
     }
@@ -251,9 +255,13 @@ def template3b(
         if d.get("deviceId", d.get("device_id"))
     )
 
-    # 🌐 Only fetch Jira tickets if running locally
-    jira_instr_data = get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
-    annotation_data = get_onc_annotations(all_dev_ids)
+    # 🌐 Only fetch internal Jira tickets & DB annotations if running locally
+    jira_instr_data = (
+        get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
+    )
+    annotation_data = (
+        get_onc_annotations(all_dev_ids) if is_local_env else {}
+    )
 
     client.ui.import_custom_badge_css(sticky_device=False)
 
@@ -302,7 +310,9 @@ def template3b(
         client.section.location_expander(device)
 
         dev_id = device.get("deviceId", device.get("device_id", "Unknown ID"))
-        dev_name = device.get("deviceName", device.get("device_name", "Unknown Device"))
+        dev_name = device.get(
+            "deviceName", device.get("device_name", "Unknown Device")
+        )
 
         st.subheader(f"{dev_name} ({dev_id})")
         client.ui.device(device)
@@ -327,16 +337,21 @@ def template3b(
                 st.caption("🎫 *No active Jira tickets.*")
 
         # --- ANNOTATIONS SECTION ---
-        annotations = annotation_data.get(int(dev_id), [])
-        if annotations:
-            with st.expander(
-                f"📝 **Active Annotations ({len(annotations)})**",
-                expanded=True,
-            ):
-                for a in annotations:
-                    st.markdown(f"- **{a['date']}** | {a['text']}")
+        if not is_local_env:
+            st.caption(
+                "📝 *Annotations are only accessible on the internal ONC network.*"
+            )
         else:
-            st.caption("📝 *No active annotations.*")
+            annotations = annotation_data.get(int(dev_id), [])
+            if annotations:
+                with st.expander(
+                    f"📝 **Active Annotations ({len(annotations)})**",
+                    expanded=True,
+                ):
+                    for a in annotations:
+                        st.markdown(f"- **{a['date']}** | {a['text']}")
+            else:
+                st.caption("📝 *No active annotations.*")
 
         st.write("")
 
@@ -347,7 +362,9 @@ def template3b(
 
         # Checks ONLY if the device has a valid device code
         if dev_code:
-            with st.expander("📦 **Archive Files (Last 3 Days)**", expanded=True):
+            with st.expander(
+                "📦 **Archive Files (Last 3 Days)**", expanded=True
+            ):
                 client.widget.table_archive_files(device, date_from="-P3D")
             st.write("")
         # ==============================================================================
@@ -369,17 +386,28 @@ def template3b(
         sensors_list = device.get("sensors", [])
 
         is_ctd = (
-            "CTD" in device_name.upper() or "CONDUCTIVITY" in device_category.upper()
+            "CTD" in device_name.upper()
+            or "CONDUCTIVITY" in device_category.upper()
         )
-        is_oxy = "OXYGEN" in device_name.upper() or "OXYGEN" in device_category.upper()
+        is_oxy = (
+            "OXYGEN" in device_name.upper()
+            or "OXYGEN" in device_category.upper()
+        )
 
         if is_ctd or is_oxy:
             for sensor in sensors_list:
-                s_name = sensor.get("sensorName", sensor.get("sensor_name", ""))
-                s_type = sensor.get("sensorType", sensor.get("sensor_type", ""))
+                s_name = sensor.get(
+                    "sensorName", sensor.get("sensor_name", "")
+                )
+                s_type = sensor.get(
+                    "sensorType", sensor.get("sensor_type", "")
+                )
                 s_id = sensor.get("sensorId", sensor.get("sensor_id"))
 
-                if "TEMPERATURE" in s_name.upper() or "TEMPERATURE" in s_type.upper():
+                if (
+                    "TEMPERATURE" in s_name.upper()
+                    or "TEMPERATURE" in s_type.upper()
+                ):
                     simple_device_name = "CTD" if is_ctd else "Oxygen"
                     sensor_info = {
                         "sensorId": s_id,
@@ -404,8 +432,12 @@ def template3b(
             "label",
             oxy_temp.get("sensorName", oxy_temp.get("sensor_name", "Oxygen")),
         )
-        ctd_id = ctd_temp.get("id", ctd_temp.get("sensorId", ctd_temp.get("sensor_id")))
-        oxy_id = oxy_temp.get("id", oxy_temp.get("sensorId", oxy_temp.get("sensor_id")))
+        ctd_id = ctd_temp.get(
+            "id", ctd_temp.get("sensorId", ctd_temp.get("sensor_id"))
+        )
+        oxy_id = oxy_temp.get(
+            "id", oxy_temp.get("sensorId", oxy_temp.get("sensor_id"))
+        )
 
         st.caption(f"Comparing: **{ctd_label}** vs. **{oxy_label}**")
 
@@ -437,7 +469,7 @@ def template3b(
             shade=False,
         )
 
-
+# --- Template Coastal Observatories -------------------------------------------------------------------------------------------------
 # --- Template Coastal Observatories -------------------------------------------------------------------------------------------------
 def template_coastal_obs(
     json_filename: str,
@@ -485,11 +517,13 @@ def template_coastal_obs(
         if d.get("deviceId", d.get("device_id"))
     )
 
-    # 🌐 Only fetch Jira tickets if running locally
+    # 🌐 Only fetch Jira tickets & DB annotations if running locally
     jira_instr_data = (
         get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
     )
-    annotation_data = get_onc_annotations(all_dev_ids)
+    annotation_data = (
+        get_onc_annotations(all_dev_ids) if is_local_env else {}
+    )
 
     client.ui.import_custom_badge_css(sticky_device=False)
     st.title(f"{page_title} Monitoring Dashboard")
@@ -562,16 +596,21 @@ def template_coastal_obs(
                 st.caption("🎫 *No active Jira tickets.*")
 
         # --- ANNOTATIONS SECTION ---
-        annotations = annotation_data.get(int(dev_id), [])
-        if annotations:
-            with st.expander(
-                f"📝 **Active Annotations ({len(annotations)})**",
-                expanded=True,
-            ):
-                for a in annotations:
-                    st.markdown(f"- **{a['date']}** | {a['text']}")
+        if not is_local_env:
+            st.caption(
+                "📝 *Annotations are only accessible on the internal ONC network.*"
+            )
         else:
-            st.caption("📝 *No active annotations.*")
+            annotations = annotation_data.get(int(dev_id), [])
+            if annotations:
+                with st.expander(
+                    f"📝 **Active Annotations ({len(annotations)})**",
+                    expanded=True,
+                ):
+                    for a in annotations:
+                        st.markdown(f"- **{a['date']}** | {a['text']}")
+            else:
+                st.caption("📝 *No active annotations.*")
 
         st.write("")
         sensors_list = device.get("sensors", [])

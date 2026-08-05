@@ -161,10 +161,14 @@ def render_custom_global_map(
 # ==============================================================================
 @st.cache_data(ttl=300, show_spinner=False)
 def get_onc_annotations(device_ids: tuple) -> dict:
-    """
-    Connects to the PostgreSQL DB using secrets.toml credentials
+    """Connects to the PostgreSQL DB using secrets.toml credentials
+
     and fetches collapsed active annotations for all device IDs.
     """
+    # 🛑 Exit immediately on Streamlit Cloud (/mount/src exists)
+    if os.path.exists("/mount/src"):
+        return {}
+
     if not device_ids:
         return {}
 
