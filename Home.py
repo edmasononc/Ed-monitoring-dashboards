@@ -1,3 +1,20 @@
+import os
+
+# 🛑 ULTIMATE GUARD: Instantly intercept and fail any hidden Jira requests on Streamlit Cloud
+if os.path.exists("/mount/src"):
+    import requests
+
+    _original_request = requests.Session.request
+
+    def _fast_fail_jira(self, method, url, *args, **kwargs):
+        if url and "jira.oceannetworks.ca" in str(url):
+            raise requests.exceptions.ConnectionError(
+                "Jira is blocked on Streamlit Cloud"
+            )
+        return _original_request(self, method, url, *args, **kwargs)
+
+    requests.Session.request = _fast_fail_jira
+
 import streamlit as st
 
 st.set_page_config(page_title="DAQ Dashboard")
@@ -5,11 +22,8 @@ st.title("Welcome to Ed's monitoring dashboard!")
 st.write(
     "For individual instrument dashboards - Please select a dashboard from the sidebar. Click There 👈"
 )
-
-#st.write("----")
-
-#st.write("Below are some **_links_** to public ONC dashboards")
-
+st.write("Current Working Directory:", os.getcwd())
+st.write("Does /mount/src exist?", os.path.exists("/mount/src"))
 # --- Custom CSS for st.link_button ---
 st.markdown(
     """
@@ -32,16 +46,3 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
-
-# --- Your actual Streamlit link button ---
-#st.link_button(
-   #"ONCs General Earthquake Dashboard",
-    #"https://www.oceannetworks.ca/data/data-dashboards/earthquake-data-dashboard/",
-#)
-
-#st.link_button(
-   # "ONCs Endeavour Earthquake Catalog",
-   # "https://data.oceannetworks.ca/EndeavourEarthquakeCatalog",
-#)
-
-#st.image("https://cdn.pixabay.com/photo/2011/12/13/14/28/earth-11009_1280.jpg")
