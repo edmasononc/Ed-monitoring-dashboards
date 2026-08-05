@@ -1,5 +1,6 @@
 import json
 import os
+import socket
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -11,6 +12,18 @@ from oncdw import ONCDW
 from oncdw._util import parse_datetime_parameters
 
 PAGES_DIR = Path(__file__).resolve().parent / "pages"
+
+
+# 🛑 SOCKET GUARD: Instantly fail DNS resolution for Jira on Streamlit Cloud
+if os.path.exists("/mount/src"):
+    _orig_getaddrinfo = socket.getaddrinfo
+
+    def _block_jira_dns(host, port, family=0, type=0, proto=0, flags=0):
+        if host and "jira.oceannetworks.ca" in str(host):
+            raise socket.gaierror(-2, "Jira DNS resolution blocked on Streamlit Cloud")
+        return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+    socket.getaddrinfo = _block_jira_dns
 
 
 # ==============================================================================
@@ -244,12 +257,14 @@ def get_jira_instr_tickets(device_ids: tuple) -> dict:
                 if len(summary) > 100:
                     summary = summary[:97] + "..."
 
-                formatted.append({
-                    "key": i.key,
-                    "status": i.fields.status.name,
-                    "summary": summary,
-                    "link": f"{jira_creds['JIRA_SERVER']}/browse/{i.key}",
-                })
+                formatted.append(
+                    {
+                        "key": i.key,
+                        "status": i.fields.status.name,
+                        "summary": summary,
+                        "link": f"{jira_creds['JIRA_SERVER']}/browse/{i.key}",
+                    }
+                )
             return dev_id, formatted
         except Exception:
             return dev_id, []

@@ -1,5 +1,6 @@
 import json
 import os
+import socket
 
 import streamlit as st
 from oncdw import ONCDW
@@ -17,7 +18,19 @@ from helpers import (
 # --- TEMPLATES ---
 # ==============================================================================
 
+# 🛑 SOCKET GUARD: Instantly fail DNS resolution for Jira on Streamlit Cloud
+if os.path.exists("/mount/src"):
+    _orig_getaddrinfo = socket.getaddrinfo
 
+    def _block_jira_dns(host, port, family=0, type=0, proto=0, flags=0):
+        if host and "jira.oceannetworks.ca" in str(host):
+            raise socket.gaierror(
+                -2, "Jira DNS resolution blocked on Streamlit Cloud"
+            )
+        return _orig_getaddrinfo(host, port, family, type, proto, flags)
+
+    socket.getaddrinfo = _block_jira_dns
+    
 # --- Template 1 --------------------------------------------------------------------------------------------------
 def template1(
     json_filename: str,
