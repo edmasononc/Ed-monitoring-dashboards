@@ -1,4 +1,5 @@
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -204,16 +205,25 @@ def get_onc_annotations(device_ids: tuple) -> dict:
 
 @st.cache_data(ttl=300, show_spinner=False)
 def get_jira_instr_tickets(device_ids: tuple) -> dict:
-    """
-    Concurrently fetches open Jira tickets for a list of device IDs.
+    """Concurrently fetches open Jira tickets for a list of device IDs.
+
     Returns a dictionary mapping device_id -> list of ticket dictionaries.
     """
+    # 🛑 1. Exit immediately on Streamlit Cloud (/mount/src exists in cloud containers)
+    if os.path.exists("/mount/src"):
+        return {}
+
     if not device_ids:
         return {}
 
     try:
         jira_creds = st.secrets["connections"]["jira"]
-        jira = JIRA(server=jira_creds["JIRA_SERVER"], token_auth=jira_creds["JIRA_PAT"])
+        jira = JIRA(
+            server=jira_creds["JIRA_SERVER"],
+            token_auth=jira_creds["JIRA_PAT"],
+            options={"timeout": 3},  # ⏱️ 3-second timeout if local network hangs
+            max_retries=0,  # 🚫 No retries
+        )
     except Exception as e:
         st.warning(f"Jira Connection failed: {e}")
         return {}
@@ -230,14 +240,12 @@ def get_jira_instr_tickets(device_ids: tuple) -> dict:
                 if len(summary) > 100:
                     summary = summary[:97] + "..."
 
-                formatted.append(
-                    {
-                        "key": i.key,
-                        "status": i.fields.status.name,
-                        "summary": summary,
-                        "link": f"{jira_creds['JIRA_SERVER']}/browse/{i.key}",
-                    }
-                )
+                formatted.append({
+                    "key": i.key,
+                    "status": i.fields.status.name,
+                    "summary": summary,
+                    "link": f"{jira_creds['JIRA_SERVER']}/browse/{i.key}",
+                })
             return dev_id, formatted
         except Exception:
             return dev_id, []
