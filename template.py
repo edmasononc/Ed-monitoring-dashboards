@@ -1,4 +1,5 @@
 import json
+import os
 
 import streamlit as st
 from oncdw import ONCDW
@@ -76,6 +77,7 @@ def template1(
             st.subheader("Archive file table")
             client.widget.table_archive_files(device, date_from="-P4D")
 
+
 # --- Template 2 --------------------------------------------------------------------------------------------------
 def template2(
     json_filename: str,
@@ -119,6 +121,7 @@ def template2(
         client.section.data_preview(device)
         st.subheader("Time Series plot")
         client.section.time_series(device["sensors"])
+
 
 # --- Template 3 --------------------------------------------------------------------------------------------------
 def template3(
@@ -204,6 +207,7 @@ def template4(
         st.divider()
         client.section.data_preview(device)
 
+
 # --- Template 3b --------------------------------------------------------------------------------------------------
 def template3b(
     json_filename: str,
@@ -213,6 +217,11 @@ def template3b(
     zoom: int | None = None,
 ):
     st.set_page_config(layout="wide", page_title=page_title)
+
+    # --------------------------------------------------------------------------
+    # Environment Check: Streamlit Cloud uses '/mount/src'
+    # --------------------------------------------------------------------------
+    is_local_env = not os.path.exists("/mount/src")
 
     with open(PAGES_DIR / f"{json_filename}.json", encoding="utf-8") as f:
         devices: list = json.load(f)
@@ -241,7 +250,9 @@ def template3b(
         for d in devices
         if d.get("deviceId", d.get("device_id"))
     )
-    jira_instr_data = get_jira_instr_tickets(all_dev_ids)
+
+    # 🌐 Only fetch Jira tickets if running locally
+    jira_instr_data = get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
     annotation_data = get_onc_annotations(all_dev_ids)
 
     client.ui.import_custom_badge_css(sticky_device=False)
@@ -297,27 +308,36 @@ def template3b(
         client.ui.device(device)
 
         # --- JIRA TICKETS SECTION ---
-        tickets = jira_instr_data.get(int(dev_id), [])
-        if tickets:
-            with st.expander(
-                f"🎫 **Active Jira Tickets ({len(tickets)})**", expanded=True
-            ):
-                for t in tickets:
-                    st.markdown(
-                        f"- **[{t['key']}]({t['link']})** | *{t['status']}* | {t['summary']}"
-                    )
+        if not is_local_env:
+            st.caption(
+                "🎫 *Jira tickets are only accessible on the internal ONC network.*"
+            )
         else:
-            st.caption("🎫 *No active Jira tickets.*")
+            tickets = jira_instr_data.get(int(dev_id), [])
+            if tickets:
+                with st.expander(
+                    f"🎫 **Active Jira Tickets ({len(tickets)})**",
+                    expanded=True,
+                ):
+                    for t in tickets:
+                        st.markdown(
+                            f"- **[{t['key']}]({t['link']})** | *{t['status']}* | {t['summary']}"
+                        )
+            else:
+                st.caption("🎫 *No active Jira tickets.*")
 
         # --- ANNOTATIONS SECTION ---
         annotations = annotation_data.get(int(dev_id), [])
         if annotations:
-            with st.expander(f"📝 **Active Annotations ({len(annotations)})**", expanded=True):
+            with st.expander(
+                f"📝 **Active Annotations ({len(annotations)})**",
+                expanded=True,
+            ):
                 for a in annotations:
                     st.markdown(f"- **{a['date']}** | {a['text']}")
         else:
             st.caption("📝 *No active annotations.*")
-            
+
         st.write("")
 
         # ==============================================================================
@@ -374,34 +394,49 @@ def template3b(
     if ctd_temp and oxy_temp:
         st.divider()
         st.subheader("Temperature Comparison: CTD vs. Oxygen Sensor")
-        
+
         # Safely extract labels and IDs whether the key is 'label', 'sensorName', etc.
-        ctd_label = ctd_temp.get("label", ctd_temp.get("sensorName", ctd_temp.get("sensor_name", "CTD")))
-        oxy_label = oxy_temp.get("label", oxy_temp.get("sensorName", oxy_temp.get("sensor_name", "Oxygen")))
+        ctd_label = ctd_temp.get(
+            "label",
+            ctd_temp.get("sensorName", ctd_temp.get("sensor_name", "CTD")),
+        )
+        oxy_label = oxy_temp.get(
+            "label",
+            oxy_temp.get("sensorName", oxy_temp.get("sensor_name", "Oxygen")),
+        )
         ctd_id = ctd_temp.get("id", ctd_temp.get("sensorId", ctd_temp.get("sensor_id")))
         oxy_id = oxy_temp.get("id", oxy_temp.get("sensorId", oxy_temp.get("sensor_id")))
-        
+
         st.caption(f"Comparing: **{ctd_label}** vs. **{oxy_label}**")
-        
-        TIME_RANGE_MAP = {"24H": "-P1D", "7D": "-P7D", "2W": "-P14D", "1M": "-P30D"}
+
+        TIME_RANGE_MAP = {
+            "24H": "-P1D",
+            "7D": "-P7D",
+            "2W": "-P14D",
+            "1M": "-P30D",
+        }
         selected_range = st.segmented_control(
-            "Select Range", options=list(TIME_RANGE_MAP.keys()), default="7D",
-            key=f"range_pair_ctd_oxy_{ctd_id}", label_visibility="collapsed"
+            "Select Range",
+            options=list(TIME_RANGE_MAP.keys()),
+            default="7D",
+            key=f"range_pair_ctd_oxy_{ctd_id}",
+            label_visibility="collapsed",
         )
-        
+
         if not selected_range:
             selected_range = "7D"
-        
+
         client.widget.time_series_two_sensors(
-            ctd_id, 
-            oxy_id, 
+            ctd_id,
+            oxy_id,
             date_from=TIME_RANGE_MAP[selected_range],
             label1=ctd_label,
             label2=oxy_label,
             color1="royalblue",
             color2="red",
-            shade=False
+            shade=False,
         )
+
 
 # --- Template Coastal Observatories -------------------------------------------------------------------------------------------------
 def template_coastal_obs(
@@ -414,12 +449,21 @@ def template_coastal_obs(
 ):
     st.set_page_config(layout="wide", page_title=page_title)
 
+    # --------------------------------------------------------------------------
+    # Environment Check: Streamlit Cloud uses '/mount/src'
+    # --------------------------------------------------------------------------
+    is_local_env = not os.path.exists("/mount/src")
+
     with open(PAGES_DIR / f"{json_filename}.json", encoding="utf-8") as f:
         devices: list = json.load(f)
 
     primary_location = {
-        "locationCode": devices[0].get("locationCode", devices[0].get("location_code")),
-        "locationName": devices[0].get("locationName", devices[0].get("location_name")),
+        "locationCode": devices[0].get(
+            "locationCode", devices[0].get("location_code")
+        ),
+        "locationName": devices[0].get(
+            "locationName", devices[0].get("location_name")
+        ),
         "lat": devices[0].get("lat"),
         "lon": devices[0].get("lon"),
     }
@@ -440,7 +484,11 @@ def template_coastal_obs(
         for d in devices
         if d.get("deviceId", d.get("device_id"))
     )
-    jira_instr_data = get_jira_instr_tickets(all_dev_ids)
+
+    # 🌐 Only fetch Jira tickets if running locally
+    jira_instr_data = (
+        get_jira_instr_tickets(all_dev_ids) if is_local_env else {}
+    )
     annotation_data = get_onc_annotations(all_dev_ids)
 
     client.ui.import_custom_badge_css(sticky_device=False)
@@ -487,27 +535,38 @@ def template_coastal_obs(
         st.divider()
         client.section.location_expander(device)
         dev_id = device.get("deviceId", device.get("device_id", "Unknown ID"))
-        dev_name = device.get("deviceName", device.get("device_name", "Unknown Device"))
+        dev_name = device.get(
+            "deviceName", device.get("device_name", "Unknown Device")
+        )
 
         st.subheader(f"{dev_name} ({dev_id})")
         client.ui.device(device)
 
-        tickets = jira_instr_data.get(int(dev_id), [])
-        if tickets:
-            with st.expander(
-                f"🎫 **Active Jira Tickets ({len(tickets)})**", expanded=True
-            ):
-                for t in tickets:
-                    st.markdown(
-                        f"- **[{t['key']}]({t['link']})** | *{t['status']}* | {t['summary']}"
-                    )
+        # --- JIRA TICKETS SECTION ---
+        if not is_local_env:
+            st.caption(
+                "🎫 *Jira tickets are only accessible on the internal ONC network.*"
+            )
         else:
-            st.caption("🎫 *No active Jira tickets.*")
+            tickets = jira_instr_data.get(int(dev_id), [])
+            if tickets:
+                with st.expander(
+                    f"🎫 **Active Jira Tickets ({len(tickets)})**",
+                    expanded=True,
+                ):
+                    for t in tickets:
+                        st.markdown(
+                            f"- **[{t['key']}]({t['link']})** | *{t['status']}* | {t['summary']}"
+                        )
+            else:
+                st.caption("🎫 *No active Jira tickets.*")
 
+        # --- ANNOTATIONS SECTION ---
         annotations = annotation_data.get(int(dev_id), [])
         if annotations:
             with st.expander(
-                f"📝 **Active Annotations ({len(annotations)})**", expanded=True
+                f"📝 **Active Annotations ({len(annotations)})**",
+                expanded=True,
             ):
                 for a in annotations:
                     st.markdown(f"- **{a['date']}** | {a['text']}")
@@ -530,17 +589,28 @@ def template_coastal_obs(
         sensors_list = device.get("sensors", [])
 
         is_ctd = (
-            "CTD" in device_name.upper() or "CONDUCTIVITY" in device_category.upper()
+            "CTD" in device_name.upper()
+            or "CONDUCTIVITY" in device_category.upper()
         )
-        is_oxy = "OXYGEN" in device_name.upper() or "OXYGEN" in device_category.upper()
+        is_oxy = (
+            "OXYGEN" in device_name.upper()
+            or "OXYGEN" in device_category.upper()
+        )
 
         if is_ctd or is_oxy:
             for sensor in sensors_list:
-                s_name = sensor.get("sensorName", sensor.get("sensor_name", ""))
-                s_type = sensor.get("sensorType", sensor.get("sensor_type", ""))
+                s_name = sensor.get(
+                    "sensorName", sensor.get("sensor_name", "")
+                )
+                s_type = sensor.get(
+                    "sensorType", sensor.get("sensor_type", "")
+                )
                 s_id = sensor.get("sensorId", sensor.get("sensor_id"))
 
-                if "TEMPERATURE" in s_name.upper() or "TEMPERATURE" in s_type.upper():
+                if (
+                    "TEMPERATURE" in s_name.upper()
+                    or "TEMPERATURE" in s_type.upper()
+                ):
                     simple_device_name = "CTD" if is_ctd else "Oxygen"
                     sensor_info = {
                         "sensorId": s_id,
@@ -555,31 +625,49 @@ def template_coastal_obs(
     if ctd_temp and oxy_temp:
         st.divider()
         st.subheader("Temperature Comparison: CTD vs. Oxygen Sensor")
-        
+
         # Safely extract labels and IDs whether the key is 'label', 'sensorName', etc.
-        ctd_label = ctd_temp.get("label", ctd_temp.get("sensorName", ctd_temp.get("sensor_name", "CTD")))
-        oxy_label = oxy_temp.get("label", oxy_temp.get("sensorName", oxy_temp.get("sensor_name", "Oxygen")))
-        ctd_id = ctd_temp.get("id", ctd_temp.get("sensorId", ctd_temp.get("sensor_id")))
-        oxy_id = oxy_temp.get("id", oxy_temp.get("sensorId", oxy_temp.get("sensor_id")))
-        
-        st.caption(f"Comparing: **{ctd_label}** vs. **{oxy_label}**")
-        
-        TIME_RANGE_MAP = {"24H": "-P1D", "7D": "-P7D", "2W": "-P14D", "1M": "-P30D"}
-        selected_range = st.segmented_control(
-            "Select Range", options=list(TIME_RANGE_MAP.keys()), default="7D",
-            key=f"range_pair_ctd_oxy_{ctd_id}", label_visibility="collapsed"
+        ctd_label = ctd_temp.get(
+            "label",
+            ctd_temp.get("sensorName", ctd_temp.get("sensor_name", "CTD")),
         )
-        
+        oxy_label = oxy_temp.get(
+            "label",
+            oxy_temp.get("sensorName", oxy_temp.get("sensor_name", "Oxygen")),
+        )
+        ctd_id = ctd_temp.get(
+            "id", ctd_temp.get("sensorId", ctd_temp.get("sensor_id"))
+        )
+        oxy_id = oxy_temp.get(
+            "id", oxy_temp.get("sensorId", oxy_temp.get("sensor_id"))
+        )
+
+        st.caption(f"Comparing: **{ctd_label}** vs. **{oxy_label}**")
+
+        TIME_RANGE_MAP = {
+            "24H": "-P1D",
+            "7D": "-P7D",
+            "2W": "-P14D",
+            "1M": "-P30D",
+        }
+        selected_range = st.segmented_control(
+            "Select Range",
+            options=list(TIME_RANGE_MAP.keys()),
+            default="7D",
+            key=f"range_pair_ctd_oxy_{ctd_id}",
+            label_visibility="collapsed",
+        )
+
         if not selected_range:
             selected_range = "7D"
-        
+
         client.widget.time_series_two_sensors(
-            ctd_id, 
-            oxy_id, 
+            ctd_id,
+            oxy_id,
             date_from=TIME_RANGE_MAP[selected_range],
             label1=ctd_label,
             label2=oxy_label,
             color1="royalblue",
             color2="red",
-            shade=False
+            shade=False,
         )
